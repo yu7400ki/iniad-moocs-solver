@@ -7,7 +7,19 @@ const manifest = defineManifest({
   version: "0.0.1",
   permissions: ["storage"],
   action: {
-    default_popup: "index.html",
+    default_popup: "page/popup.html",
+  },
+  content_scripts: [
+    {
+      matches: ["https://moocs.iniad.org/courses/*"],
+      js: ["src/scripts/content.ts"],
+    },
+  ],
+  icons: {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
   },
 });
 
