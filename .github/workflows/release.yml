@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm run build
+      - run: zip -r release.zip dist
+
+      - name: get sha
+        shell: bash
+        id: get_sha
+        run: |
+          sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          echo "sha=$sha"
+          echo "::set-output name=value::$sha"
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            release.zip
+          tag_name: ${{ steps.get_sha.outputs.value }}
+          name: ${{ steps.get_sha.outputs.value }}
+          body: |
+            ${{ steps.get_sha.outputs.value }}
+          draft: false
+          prerelease: false
