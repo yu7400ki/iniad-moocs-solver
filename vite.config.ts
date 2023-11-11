@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 const manifest = defineManifest({
   manifest_version: 3,
-  name: "Moocs Solver",
+  name: "INIAD Moocs Solver",
   version: "0.0.1",
   permissions: ["storage"],
   action: {

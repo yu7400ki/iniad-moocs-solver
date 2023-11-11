@@ -4,7 +4,7 @@ const targetFile = "dist/manifest.json";
 
 const browserSpecificSettings = {
   gecko: {
-    id: "{221bbd76-28c2-4e73-bc14-06fdb0ce8e99}",
+    id: "{252971c5-e196-454f-9958-e37c45ab8dea}",
     strict_min_version: "109.0",
   },
 };
