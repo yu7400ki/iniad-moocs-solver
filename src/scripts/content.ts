@@ -1,5 +1,5 @@
 import { $object, $string, Infer } from "lizod";
-import type { ChatCompletion } from "openai/resources/index.mjs";
+import type { ChatCompletion, ChatCompletionCreateParams } from "openai/resources/index.mjs";
 import van from "vanjs-core";
 import Settings from "../helpers/settings";
 
@@ -97,22 +97,23 @@ const fetchAnswer = async (html: string, apiKey: string, baseURL: string, model:
     },
   } as const;
 
-  const url = `${baseURL}/chat/completions`;
+  const body: ChatCompletionCreateParams = {
+    model,
+    messages: [
+      { role: "system", content: instructions },
+      { role: "user", content: user },
+    ],
+    tools: [tool],
+  };
+
+  const url = new URL(`${baseURL}/chat/completions`);
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: "system", content: instructions },
-        { role: "user", content: user },
-      ],
-      tools: [tool],
-      tool_choice: "auto",
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
