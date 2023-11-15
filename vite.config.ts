@@ -26,3 +26,5 @@ const manifest = defineManifest({
 export default defineConfig({
   plugins: [crx({ manifest })],
 });
+
+export { manifest };

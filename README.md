@@ -5,8 +5,8 @@ INIAD Moocs の解答欄に ChatGPT による解答を自動挿入する拡張�
 ## インストール
 
 - [Chrome]()
-- [Firefox](https://addons.mozilla.org/ja/firefox/addon/iniad-moocs-solver/)
-- [Release](https://github.com/yu7400ki/moocs-solver/releases/latest)
+- [Firefox]()
+- [Release](https://github.com/yu7400ki/iniad-moocs-solver/releases/latest)
 
 ⚠️ Firefox は、`拡張機能 > INIAD Moocs Solver > 管理 > 権限`より、`https://moocs.iniad.org の保存されたデータへのアクセス`を有効にする必要があります。
 
