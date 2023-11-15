@@ -68,7 +68,7 @@ const Solve = ({ problem }: Props) => {
       onclick: handleClick,
       disabled: loading,
     },
-    "Chat GPT",
+    "ChatGPT",
   );
 };
 
