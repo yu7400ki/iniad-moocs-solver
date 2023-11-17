@@ -4,9 +4,8 @@ INIAD Moocs の解答欄に ChatGPT による解答を自動挿入する拡張�
 
 ## インストール
 
-- [Chrome]()
-- [Firefox]()
-- [Release](https://github.com/yu7400ki/iniad-moocs-solver/releases/latest)
+- [Chrome](https://chromewebstore.google.com/detail/iniad-moocs-solver/maedfbckoippeclhlkkaapglbookaeek)
+- [Firefox](https://github.com/yu7400ki/iniad-moocs-solver/releases/tag/v0.0.1)
 
 ⚠️ Firefox は、`拡張機能 > INIAD Moocs Solver > 管理 > 権限`より、`https://moocs.iniad.org の保存されたデータへのアクセス`を有効にする必要があります。
 
@@ -40,14 +39,14 @@ INIAD Moocs の解答欄に ChatGPT による解答を自動挿入する拡張�
 
 現時点で以下のモデルが対応しています。
 
+- gpt-3.5-turbo-1106(推奨)
 - gpt-4-1106-preview
-- gpt-3.5-turbo-1106
 
 詳しくは[ドキュメント](https://platform.openai.com/docs/guides/function-calling/supported-models)を参照してください。
 
 #### INIAD OpenAI API の使用
 
-INIAD OpenAI API(`https://api.openai.iniad.org/api/v1`)は現在[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS)によりアクセスが制限されています。
+INIAD OpenAI API(`https://api.openai.iniad.org/api/v1`)は[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS)によりアクセスが制限されています。
 代わりにプロキシサーバー(`https://proxy-iniad-openai.yu7400ki.workers.dev/api/v1`)を使用することでこの問題を回避できます。プロキシサーバーのソースコードは[yu7400ki/proxy-iniad-openai](https://github.com/yu7400ki/proxy-iniad-openai)で公開されています。
 
 ## License
