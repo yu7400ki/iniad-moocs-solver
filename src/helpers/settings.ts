@@ -1,4 +1,4 @@
-import { $boolean, $object, $string, Infer } from "lizod";
+import { $boolean, $object, $string, type Infer } from "lizod";
 
 const validate = $object({
   baseURL: $string,

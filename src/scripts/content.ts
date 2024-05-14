@@ -1,4 +1,4 @@
-import { $object, $string, Infer } from "lizod";
+import { $object, $string, type Infer } from "lizod";
 import type { ChatCompletion, ChatCompletionCreateParams } from "openai/resources/index.mjs";
 import van from "vanjs-core";
 import Settings from "../helpers/settings";
@@ -14,16 +14,18 @@ type Props = {
   problem: string;
 };
 
+const ignoreNamePattern = [/^network$/, /room$/, /seat$/];
+
 const Solve = ({ problem }: Props) => {
   const loading = van.state(false);
 
   const insertAnswer = ({ name, answer }: Infer<typeof validate>, allowOverwrite: boolean) => {
-    if (name.includes("$network")) return;
+    if (ignoreNamePattern.some((pattern) => pattern.test(name))) return;
     const selector = `[name="${name}"]`;
     const container = document.querySelector(`[data-problem="${problem}"]`);
     const element = container?.querySelector(selector);
     if (!element) return;
-    if (element instanceof HTMLInputElement && element.type === "text") {
+    if (element instanceof HTMLInputElement && ["text", "number"].includes(element.type)) {
       if (!allowOverwrite && element.value) return;
       element.value = answer;
     } else if (element instanceof HTMLSelectElement) {
@@ -37,11 +39,25 @@ const Solve = ({ problem }: Props) => {
     }
   };
 
+  const insertUserInstruction = (contents: Element) => {
+    for (const element of contents.querySelectorAll(".form-control")) {
+      if (ignoreNamePattern.some((pattern) => pattern.test(element.getAttribute("name") || ""))) continue;
+      if (element instanceof HTMLInputElement && element.type === "text") {
+        element.setAttribute("value", element.value);
+      } else if (element instanceof HTMLTextAreaElement) {
+        element.innerHTML = element.value;
+      }
+    }
+  };
+
+  const isElement = (element: unknown): element is Element => element instanceof Element;
+
   const handleClick = async () => {
     const { apiKey, baseURL, model, instructions, allowOverwrite } = await Settings.get();
     const container = document.querySelector(`[data-problem="${problem}"]`);
-    const contents = container?.querySelector(".problem-contents");
-    if (!contents) return;
+    const contents = container?.querySelector(".problem-contents")?.cloneNode(true);
+    if (!isElement(contents)) return;
+    insertUserInstruction(contents);
     loading.val = true;
     try {
       const toolCalls = await fetchAnswer(contents.outerHTML, apiKey, baseURL, model, instructions);
