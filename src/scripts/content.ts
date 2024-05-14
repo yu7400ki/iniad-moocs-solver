@@ -45,7 +45,7 @@ const Solve = ({ problem }: Props) => {
       if (element instanceof HTMLInputElement && element.type === "text") {
         element.setAttribute("value", element.value);
       } else if (element instanceof HTMLTextAreaElement) {
-        element.innerHTML = element.value;
+        element.textContent = element.value;
       }
     }
   };
