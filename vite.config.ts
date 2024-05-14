@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 const manifest = defineManifest({
   manifest_version: 3,
   name: "INIAD Moocs Solver",
-  version: "0.0.1",
+  version: "0.0.2",
   permissions: ["storage"],
   action: {
     default_popup: "page/popup.html",
