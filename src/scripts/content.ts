@@ -53,14 +53,14 @@ const Solve = ({ problem }: Props) => {
   const isElement = (element: unknown): element is Element => element instanceof Element;
 
   const handleClick = async () => {
-    const { apiKey, baseURL, model, instructions, allowOverwrite } = await Settings.get();
+    const { allowOverwrite, ...settings } = await Settings.get();
     const container = document.querySelector(`[data-problem="${problem}"]`);
     const contents = container?.querySelector(".problem-contents")?.cloneNode(true);
     if (!isElement(contents)) return;
     insertUserInstruction(contents);
     loading.val = true;
     try {
-      const toolCalls = await fetchAnswer(contents.outerHTML, apiKey, baseURL, model, instructions);
+      const toolCalls = await fetchAnswer(contents.outerHTML, settings);
       if (!toolCalls) throw new Error("解答の生成に失敗しました。");
       for (const tool of toolCalls) {
         if (tool.function.name !== "insert_answer") continue;
@@ -88,7 +88,10 @@ const Solve = ({ problem }: Props) => {
   );
 };
 
-const fetchAnswer = async (html: string, apiKey: string, baseURL: string, model: string, instructions: string) => {
+const fetchAnswer = async (
+  html: string,
+  { apiKey, baseURL, model, instructions }: Omit<Settings, "allowOverwrite">,
+) => {
   const user = `\`\`\`html\n${html}\n\`\`\``;
 
   const tool = {
